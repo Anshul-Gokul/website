@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anshul Gokul - CS & Math @ Georgia Tech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #3b82f6;
+            --primary-blue-dark: #1d4ed8;
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d5db;
+            --text-tertiary: #9ca3af;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .typewriter {
+            border-right: 2px solid var(--primary-blue);
+            animation: blink 1s infinite;
+            min-height: 1.5em;
+            display: inline-block;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-color: var(--primary-blue); }
+            51%, 100% { border-color: transparent; }
+        }
+        
+        .card-glow {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .card-glow:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card-glow:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.25);
+        }
+        
+        .card-glow:hover:before {
+            opacity: 1;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(15, 15, 35, 0.9);
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-primary:hover:before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            border: 2px solid var(--primary-blue);
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary:hover:before {
+            width: 100%;
+        }
+        
+        .progress-bar {
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, var(--primary-blue), #8b5cf6);
+        }
+        
+        .section-fade {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translate(-50%, 0);
+            }
+            40%, 43% {
+                transform: translate(-50%, -12px);
+            }
+            70% {
+                transform: translate(-50%, -6px);
+            }
+            90% {
+                transform: translate(-50%, -3px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            .card-glow:hover {
+                transform: translateY(-4px) scale(1.01);
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white antialiased overflow-x-hidden">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+    
+    <!-- Mobile Menu -->
+    <nav id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-gray-800 z-50 p-6 shadow-xl">
+        <button id="close-menu" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="mt-8 space-y-4">
+            <a href="#home" class="block text-gray-300 hover:text-blue-400 transition-colors py-2">Home</a>
+            <a href="#about" class="block text-gray-300 hover:text-blue-400 transition-colors py-2">About</a>
+            <a href="#projects" class="block text-gray-300 hover:text-blue-400 transition-colors py-2">Projects</a>
+            <a href="#skills" class="block text-gray-300 hover:text-blue-400 transition-colors py-2">Skills</a>
+            <a href="#contact" class="block text-gray-300 hover:text-blue-400 transition-colors py-2">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-30 nav-blur border-b border-gray-700">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold gradient-text">AG</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-gray-300 hover:text-blue-400 transition-all duration-300 relative">Home</a>
+                    <a href="#about" class="nav-link text-gray-300 hover:text-blue-400 transition-all duration-300 relative">About</a>
+                    <a href="#projects" class="nav-link text-gray-300 hover:text-blue-400 transition-all duration-300 relative">Projects</a>
+                    <a href="#skills" class="nav-link text-gray-300 hover:text-blue-400 transition-all duration-300 relative">Skills</a>
+                    <a href="#contact" class="nav-link text-gray-300 hover:text-blue-400 transition-all duration-300 relative">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-blue-400 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen gradient-bg flex items-center justify-center relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent"></div>
+        <div class="text-center px-4 max-w-5xl mx-auto relative z-10">
+            <div class="floating">
+                <h1 class="hero-title text-6xl md:text-8xl font-bold mb-6 text-white text-glow">
+                    Anshul Gokul
+                </h1>
+            </div>
+            <div class="hero-subtitle text-xl md:text-3xl gradient-text mb-6 font-medium">
+                CS & Math @ Georgia Tech
+            </div>
+            <div class="text-lg md:text-xl text-blue-400 mb-12 min-h-[2rem]">
+                <span id="typewriter" class="typewriter"></span>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <button class="btn-primary px-10 py-4 rounded-lg font-semibold text-white text-lg relative z-10">
+                    <span class="relative z-10">Download Resume</span>
+                </button>
+                <button class="btn-secondary text-blue-400 px-10 py-4 rounded-lg font-semibold text-lg relative z-10">
+                    <span class="relative z-10">View Projects</span>
+                </button>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 scroll-indicator">
+            <div class="w-6 h-10 border-2 border-blue-400 rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-blue-400 rounded-full mt-2"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-gray-800">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-5xl font-bold mb-16 text-center gradient-text section-fade">About Me</h2>
+            <div class="section-fade">
+                <div class="text-center mb-12">
+                    <p class="text-xl text-gray-300 mb-6 leading-relaxed max-w-3xl mx-auto">
+                        I'm a CS and Math double major at Georgia Tech passionate about solving complex problems through 
+                        elegant code and mathematical reasoning. My interests span quantitative finance, competitive programming, 
+                        and chess mastery.
+                    </p>
+                    <p class="text-lg text-gray-400 leading-relaxed max-w-3xl mx-auto">
+                        Currently preparing for top-tier internships while maintaining academic excellence and competing 
+                        in mathematics competitions. I believe in the power of rigorous problem-solving and clean, efficient solutions.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card-glow text-center p-8 rounded-xl">
+                        <div class="skill-icon">🎓</div>
+                        <div class="text-4xl font-bold gradient-text mb-2">3.9</div>
+                        <div class="text-gray-300 font-medium">GPA</div>
+                        <div class="text-gray-400 text-sm mt-2">Academic Excellence</div>
+                    </div>
+                    <div class="card-glow text-center p-8 rounded-xl">
+                        <div class="skill-icon">♟️</div>
+                        <div class="text-4xl font-bold gradient-text mb-2">2100</div>
+                        <div class="text-gray-300 font-medium">USCF Rating</div>
+                        <div class="text-gray-400 text-sm mt-2">Competitive Chess</div>
+                    </div>
+                    <div class="card-glow text-center p-8 rounded-xl">
+                        <div class="skill-icon">💻</div>
+                        <div class="text-4xl font-bold gradient-text mb-2">850+</div>
+                        <div class="text-gray-300 font-medium">LeetCode Solved</div>
+                        <div class="text-gray-400 text-sm mt-2">DSA Mastery</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-5xl font-bold mb-16 text-center gradient-text section-fade">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="card-glow rounded-xl p-8 section-fade">
+                    <div class="text-5xl mb-6">🔢</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Putnam Solver</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Comprehensive LaTeX + Markdown archive featuring detailed solutions and elegant walkthroughs for competition mathematics problems.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium">LaTeX</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium">Python</span>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium">Math</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">GitHub →</button>
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Demo →</button>
+                    </div>
+                </div>
+
+                <div class="card-glow rounded-xl p-8 section-fade">
+                    <div class="text-5xl mb-6">♟️</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Chess Engine</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Advanced Python chess engine implementing Minimax with alpha-beta pruning. Successfully defeats Lichess 1200+ rated bots.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm font-medium">Python</span>
+                        <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm font-medium">AI</span>
+                        <span class="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-sm font-medium">Algorithms</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">GitHub →</button>
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Play →</button>
+                    </div>
+                </div>
+
+                <div class="card-glow rounded-xl p-8 section-fade">
+                    <div class="text-5xl mb-6">📈</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Quant Dashboard</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Sophisticated portfolio simulator with real-time market data integration using Pandas, yFinance, and advanced visualization techniques.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm font-medium">Python</span>
+                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm font-medium">Finance</span>
+                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-full text-sm font-medium">Data Viz</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">GitHub →</button>
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Demo →</button>
+                    </div>
+                </div>
+
+                <div class="card-glow rounded-xl p-8 section-fade">
+                    <div class="text-5xl mb-6">🧠</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">DSA Visualizer</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Interactive educational tool for visualizing complex data structures and algorithms, built with pure JavaScript and Canvas API.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-medium">JavaScript</span>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-medium">Canvas</span>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-medium">Education</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">GitHub →</button>
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Try It →</button>
+                    </div>
+                </div>
+
+                <div class="card-glow rounded-xl p-8 section-fade">
+                    <div class="text-5xl mb-6">⚙️</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Contest Parser</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Automated tool leveraging NLP to parse AMC/Putnam problems from PDFs and convert them into structured Anki flashcards.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-sm font-medium">Python</span>
+                        <span class="px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-sm font-medium">NLP</span>
+                        <span class="px-3 py-1 bg-red-500/20 text-red-300 rounded-full text-sm font-medium">Automation</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">GitHub →</button>
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Download →</button>
+                    </div>
+                </div>
+
+                <div class="card-glow rounded-xl p-8 section-fade">
+                    <div class="text-5xl mb-6">🔐</div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Trading Bot</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Algorithmic cryptocurrency trading bot with comprehensive backtesting framework and sophisticated risk management systems.</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-3 py-1 bg-orange-500/20 text-orange-300 rounded-full text-sm font-medium">Python</span>
+                        <span class="px-3 py-1 bg-orange-500/20 text-orange-300 rounded-full text-sm font-medium">Trading</span>
+                        <span class="px-3 py-1 bg-orange-500/20 text-orange-300 rounded-full text-sm font-medium">Crypto</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">GitHub →</button>
+                        <button class="text-blue-400 hover:text-blue-300 transition-colors font-medium">Results →</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 bg-gray-800">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-5xl font-bold mb-16 text-center gradient-text section-fade">Technical Excellence</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                
+                <div class="section-fade">
+                    <h3 class="text-3xl font-bold mb-8 text-blue-400">Programming & DSA</h3>
+                    
+                    <div class="space-y-8">
+                        <div class="card-glow p-6 rounded-lg">
+                            <div class="flex justify-between mb-3 text-gray-300">
+                                <span class="font-medium">LeetCode Progress</span>
+                                <span class="text-blue-400 font-bold">850/2500</span>
+                            </div>
+                            <div class="bg-gray-700 rounded-full h-3 overflow-hidden">
+                                <div class="progress-bar h-full rounded-full" style="width: 34%"></div>
+                            </div>
+                            <div class="text-gray-400 text-sm mt-2">Consistent daily practice</div>
+                        </div>
+
+                        <div class="card-glow p-6 rounded-lg">
+                            <div class="flex justify-between mb-3 text-gray-300">
+                                <span class="font-medium">Neetcode 150</span>
+                                <span class="text-purple-400 font-bold">120/150</span>
+                            </div>
+                            <div class="bg-gray-700 rounded-full h-3 overflow-hidden">
+                                <div class="progress-bar h-full rounded-full" style="width: 80%"></div>
+                            </div>
+                            <div class="text-gray-400 text-sm mt-2">Curated problem mastery</div>
+                        </div>
+
+                        <div class="card-glow p-6 rounded-lg">
+                            <div class="flex justify-between mb-3 text-gray-300">
+                                <span class="font-medium">Codeforces Rating</span>
+                                <span class="text-purple-400 font-bold">Specialist (1452)</span>
+                            </div>
+                            <div class="bg-gray-700 rounded-full h-3 overflow-hidden">
+                                <div class="progress-bar h-full rounded-full" style="width: 65%"></div>
+                            </div>
+                            <div class="text-gray-400 text-sm mt-2">Competitive programming</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-fade">
+                    <h3 class="text-3xl font-bold mb-8 text-blue-400">Mathematics & Chess</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="card-glow flex justify-between items-center p-6 rounded-lg">
+                            <div>
+                                <div class="font-semibold text-white text-lg">USCF Chess Rating</div>
+                                <div class="text-gray-400">Active tournament competitor</div>
+                            </div>
+                            <div class="text-3xl font-bold gradient-text">2100</div>
+                        </div>
+
+                        <div class="card-glow flex justify-between items-center p-6 rounded-lg">
+                            <div>
+                                <div class="font-semibold text-white text-lg">Putnam Preparation</div>
+                                <div class="text-gray-400">Advanced problem solving</div>
+                            </div>
+                            <div class="text-3xl font-bold text-yellow-400">Top 25%</div>
+                        </div>
+
+                        <div class="card-glow flex justify-between items-center p-6 rounded-lg">
+                            <div>
+                                <div class="font-semibold text-white text-lg">Competition Math</div>
+                                <div class="text-gray-400">AMC, AIME, local contests</div>
+                            </div>
+                            <div class="text-3xl font-bold text-green-400">Active</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-gray-900">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-5xl font-bold mb-8 gradient-text section-fade">Let's Connect</h2>
+            <p class="text-xl text-gray-400 mb-16 section-fade max-w-2xl mx-auto">
+                Interested in collaboration, discussing opportunities, or just talking about chess and competitive programming? I'd love to hear from you!
+            </p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <a href="mailto:agokul@gatech.edu" class="card-glow p-8 rounded-xl section-fade block hover:scale-105 transition-transform">
+                    <div class="text-5xl mb-4">📧</div>
+                    <div class="font-semibold text-white text-lg">Email</div>
+                    <div class="text-gray-400 text-sm mt-2">agokul@gatech.edu</div>
+                </a>
+                
+                <a href="#" class="card-glow p-8 rounded-xl section-fade block hover:scale-105 transition-transform">
+                    <div class="text-5xl mb-4">💼</div>
+                    <div class="font-semibold text-white text-lg">LinkedIn</div>
+                    <div class="text-gray-400 text-sm mt-2">Professional network</div>
+                </a>
+                
+                <a href="#" class="card-glow p-8 rounded-xl section-fade block hover:scale-105 transition-transform">
+                    <div class="text-5xl mb-4">💻</div>
+                    <div class="font-semibold text-white text-lg">GitHub</div>
+                    <div class="text-gray-400 text-sm mt-2">Code portfolio</div>
+                </a>
+                
+                <a href="#" class="card-glow p-8 rounded-xl section-fade block hover:scale-105 transition-transform">
+                    <div class="text-5xl mb-4">🏆</div>
+                    <div class="font-semibold text-white text-lg">Codeforces</div>
+                    <div class="text-gray-400 text-sm mt-2">Competitive profile</div>
+                </a>
+            </div>
+
+            <div class="section-fade">
+                <button class="btn-primary px-12 py-4 rounded-lg font-semibold text-lg text-white relative">
+                    <span class="relative z-10">Download Resume</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-gray-800 border-t border-gray-700">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <div class="mb-6">
+                <div class="text-2xl font-bold gradient-text mb-2">AG</div>
+                <p class="text-gray-400">Built with passion for clean code and elegant solutions</p>
+            </div>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Privacy</a>
+                <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Terms</a>
+                <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Sitemap</a>
+            </div>
+            <p class="text-gray-500 text-sm">&copy; 2025 Anshul Gokul. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced Typewriter Effect
+        const texts = [
+            "SWE + Quant | USCF 2100 | Putnam Competitor",
+            "Building the future through elegant code",
+            "Solving complex mathematical problems",
+            "Competitive chess enthusiast",
+            "Data structures & algorithms expert",
+            "Quantitative finance explorer"
+        ];
+        
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+
+        function typeWriter() {
+            if (!typewriterElement) return;
+            
+            const currentText = texts[textIndex];
+            const typingSpeed = isDeleting ? 30 : 60;
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentText.length) {
+                setTimeout(() => isDeleting = true, 2500);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+            }
+
+            setTimeout(typeWriter, typingSpeed);
+        }
+
+        // Enhanced Navigation with Active States
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-blue-400');
+                link.classList.add('text-gray-300');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('text-blue-400');
+                    link.classList.remove('text-gray-300');
+                }
+            });
+        }
+
+        // Smooth Scrolling with Offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+                // Close mobile menu if open
+                closeMobileMenu();
+            });
+        });
+
+        // Enhanced Intersection Observer
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        // Progressive Progress Bar Animation
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 300);
+                }
+            });
+        }, { threshold: 0.7 });
+
+        // Mobile Menu Management
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const closeMenuBtn = document.getElementById('close-menu');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('open');
+            mobileMenuOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        mobileMenuBtn?.addEventListener('click', openMobileMenu);
+        closeMenuBtn?.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
+        // Enhanced Button Interactions
+        document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const rect = this.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Scroll Performance Optimization
+        let ticking = false;
+        function updateOnScroll() {
+            updateActiveNavLink();
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateOnScroll);
+                ticking = true;
+            }
+        });
+
+        // Initialize Everything
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start typewriter with delay
+            setTimeout(typeWriter, 1000);
+            
+            // Observe all fade elements
+            document.querySelectorAll('.section-fade').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Observe progress bars
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                progressObserver.observe(bar);
+            });
+            
+            // Initial nav state
+            updateActiveNavLink();
+            
+            // Add CSS for ripple effect
+            const style = document.createElement('style');
+            style.textContent = `
+                .ripple {
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: scale(0);
+                    animation: ripple-animation 0.6s linear;
+                    pointer-events: none;
+                }
+                
+                @keyframes ripple-animation {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+                
+                .nav-link::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -5px;
+                    left: 0;
+                    width: 0;
+                    height: 2px;
+                    background: var(--primary-blue);
+                    transition: width 0.3s ease;
+                }
+                
+                .nav-link:hover::after,
+                .nav-link.text-blue-400::after {
+                    width: 100%;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Handle reduced motion preferences
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.style.setProperty('--animation-duration', '0.01s');
+        }
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+
+        // Performance monitoring
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+                console.log(`Page loaded in ${loadTime}ms`);
+            });
+        }
+    </script>
+</body>
+</html>
